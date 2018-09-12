@@ -3,7 +3,7 @@ import * as defaultStyle from '../../../style';
 
 const STYLESHEET_ID = 'stylesheet.day.period';
 
-const FILLER_HEIGHT = 34;
+const FILLER_HEIGHT = 40;
 
 export default function styleConstructor(theme={}) {
   const appStyle = {...defaultStyle, ...theme};
@@ -36,12 +36,25 @@ export default function styleConstructor(theme={}) {
       flex: 1
     },
     text: {
-      marginTop: 7,
+
+      //删除处
+      //marginTop: 7,
       fontSize: appStyle.textDayFontSize,
       fontFamily: appStyle.textDayFontFamily,
       fontWeight: '300',
       color: appStyle.dayTextColor || '#2d4150',
       backgroundColor: 'rgba(255, 255, 255, 0)'
+    },
+
+    //添加处，添加textContainer
+    textContainer: {
+      marginTop:4,
+      height:26,
+      width:26,
+      borderRadius:13,
+      justifyContent:'center',
+      alignItems:'center',
+      backgroundColor: appStyle.textContainerBackgroundColor
     },
     today: {
       backgroundColor: appStyle.todayBackgroundColor
