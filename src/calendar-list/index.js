@@ -203,7 +203,7 @@ class CalendarList extends Component {
   * */
   render() {
     return (
-      <View style={this.props.style}>
+      <View style={[{flex:1},this.props.style]}>
         <FlatList
           onLayout={this.onLayout}
           ref={(c) => this.listView = c}
