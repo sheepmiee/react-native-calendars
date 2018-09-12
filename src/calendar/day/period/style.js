@@ -3,6 +3,7 @@ import * as defaultStyle from '../../../style';
 
 const STYLESHEET_ID = 'stylesheet.day.period';
 
+//修改为40
 const FILLER_HEIGHT = 40;
 
 export default function styleConstructor(theme={}) {
