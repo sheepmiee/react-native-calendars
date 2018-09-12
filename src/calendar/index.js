@@ -41,7 +41,7 @@ class Calendar extends Component {
     // If firstDay=1 week starts from Monday. Note that dayNames and dayNamesShort should still start from Sunday.
     firstDay: PropTypes.number,
 
-    // Date marking style [simple/period/multi-dot/multi-period]. Default = 'simple' 
+    // Date marking style [simple/period/multi-dot/multi-period]. Default = 'simple'
     markingType: PropTypes.string,
 
     // Hide month navigation arrows. Default = false
@@ -212,11 +212,31 @@ class Calendar extends Component {
     }
   }
 
+  /*
+  * 修改处
+  * */
   getDateMarking(day) {
     if (!this.props.markedDates) {
       return false;
     }
-    const dates = this.props.markedDates[day.toString('yyyy-MM-dd')] || EmptyArray;
+
+    //加入判断是否是超出最大最小日期的date，是的话不给color，即没有标记
+    const minDate = parseDate(this.props.minDate);
+    const maxDate = parseDate(this.props.maxDate);
+    const isOutDate = (minDate && !dateutils.isGTE(day, minDate)) || (maxDate && !dateutils.isLTE(day, maxDate));
+    const defaultMarkData = isOutDate?EmptyArray:{color:'#f8ce6f'};
+
+    const dates = this.props.markedDates[day.toString('yyyy-MM-dd')] || defaultMarkData;
+
+    //加入判断是否为起始日期与终止日期，是的话则给startingDay与endingDay标记
+    const isMinDate = dateutils.sameDate(day,minDate);
+    const isMaxDate = dateutils.sameDate(day,maxDate);
+    if(isMinDate) dates.startingDay = true;
+    if(isMaxDate) dates.endingDay = true;
+
+    if(!Array.isArray(dates)&&!dates.color){
+      dates.color='#f8ce6f'
+    }
     if (dates.length || dates) {
       return dates;
     } else {
@@ -228,7 +248,19 @@ class Calendar extends Component {
     return <Day key={`week-${weekNumber}`} theme={this.props.theme} marking={{disableTouchEvent: true}} state='disabled'>{weekNumber}</Day>;
   }
 
+  /*
+  * 修改处
+  * */
   renderWeek(days, id) {
+
+    //判断week的最后一天的时间戳是否小于起始时间的时间戳，第一天的时间戳是否大于中止时间的时间戳，是的话则该week不render
+    const {minDate,maxDate} = this.props,
+      minWeekDateTime = days[0].getTime(),
+      maxWeekDateTime = days[6].getTime(),
+      minDateTime = new Date(minDate).getTime(),
+      maxDatetime = new Date(maxDate).getTime();
+    if(maxWeekDateTime<minDateTime || minWeekDateTime>maxDatetime)return null;
+
     const week = [];
     days.forEach((day, id2) => {
       week.push(this.renderDay(day, id2));
@@ -237,7 +269,6 @@ class Calendar extends Component {
     if (this.props.showWeekNumbers) {
       week.unshift(this.renderWeekNumber(days[days.length - 1].getWeek()));
     }
-
     return (<View style={this.style.week} key={id}>{week}</View>);
   }
 
