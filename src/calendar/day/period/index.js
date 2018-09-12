@@ -55,8 +55,13 @@ class Day extends Component {
     return shouldUpdate(this.props, nextProps, ['state', 'children', 'onPress', 'onLongPress']);
   }
 
+  /*
+  * 修改处
+  * */
   getDrawingStyle(marking) {
-    const defaultStyle = {textStyle: {}};
+
+    //添加textContainerStyle，文字的圆形框
+    const defaultStyle = {textStyle: {}, textContainerStyle: {}};
     if (!marking) {
       return defaultStyle;
     }
@@ -64,6 +69,9 @@ class Day extends Component {
       defaultStyle.textStyle.color = this.theme.textDisabledColor;
     } else if (marking.selected) {
       defaultStyle.textStyle.color = this.theme.selectedDayTextColor;
+
+      //这一天的状态为selected时，给文字一个圆形框
+      defaultStyle.textContainerStyle.backgroundColor = '#1296db';
     }
     const resultStyle = ([marking]).reduce((prev, next) => {
       if (next.quickAction) {
@@ -112,9 +120,22 @@ class Day extends Component {
     return resultStyle;
   }
 
+  /*
+  * 判断是今天时，添加dot
+  * */
+  renderDot() {
+    return this.props.state === 'today'?<View style={{height:6,width:6,borderRadius:3,backgroundColor:'#e8809a'}}/>:null;
+  }
+
+  /*
+  * 修改处
+  * */
   render() {
     const containerStyle = [this.style.base];
     const textStyle = [this.style.text];
+
+    //添加textContainerStyle
+    const textContainerStyle = [this.style.textContainer];
     let leftFillerStyle = {};
     let rightFillerStyle = {};
     let fillerStyle = {};
@@ -127,14 +148,20 @@ class Day extends Component {
       textStyle.push(this.style.todayText);
     }
 
+    //修改为20，即day盒子高度的一半
     if (this.props.marking) {
       containerStyle.push({
-        borderRadius: 17
+        borderRadius: 20
       });
 
       const flags = this.markingStyle;
       if (flags.textStyle) {
         textStyle.push(flags.textStyle);
+      }
+
+      //选中状态时，flags.textContainerStyle有值，添加进textContainerStyle
+      if (flags.textContainerStyle){
+        textContainerStyle.push(flags.textContainerStyle)
       }
       if (flags.containerStyle) {
         containerStyle.push(flags.containerStyle);
@@ -191,6 +218,9 @@ class Day extends Component {
       );
     }
 
+    //红色的小圆点
+    const dot = this.renderDot();
+
     return (
       <TouchableWithoutFeedback
         onPress={this.onDayPress}
@@ -198,7 +228,13 @@ class Day extends Component {
         <View style={this.style.wrapper}>
           {fillers}
           <View style={containerStyle}>
-            <Text allowFontScaling={false} style={textStyle}>{String(this.props.children)}</Text>
+            {/*给文字一个圆形框，选中状态时给蓝色背景色*/}
+            <View style={textContainerStyle}>
+              <Text allowFontScaling={false} style={textStyle}>{String(this.props.children)}</Text>
+            </View>
+
+            {/*当天为今天时，文字下方给一个红色的小圆点标记*/}
+            <View style={{flex:1,justifyContent:'center'}}>{dot}</View>
           </View>
         </View>
       </TouchableWithoutFeedback>
