@@ -21,7 +21,10 @@ export default function getStyle(theme={}) {
     },
     calendar: {
       paddingLeft: 15,
-      paddingRight: 15
+      paddingRight: 15,
+      
+      //添加
+      marginVertical: 5
     },
     ...(theme[STYLESHEET_ID] || {})
   });
