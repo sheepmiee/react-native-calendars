@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {
-  FlatList, Platform, Dimensions,
+  FlatList, Platform, Dimensions,View
 } from 'react-native';
 import PropTypes from 'prop-types';
 import XDate from 'xdate';
@@ -198,31 +198,36 @@ class CalendarList extends Component {
     return diffMonths;
   }
 
+  /*
+  * 修改处，用view包一层以修复props.style样式的错误
+  * */
   render() {
     return (
-      <FlatList
-        onLayout={this.onLayout}
-        ref={(c) => this.listView = c}
-        //scrollEventThrottle={1000}
-        style={[this.style.container, this.props.style]}
-        initialListSize={this.pastScrollRange + this.futureScrollRange + 1}
-        data={this.state.rows}
-        //snapToAlignment='start'
-        //snapToInterval={this.calendarHeight}
-        removeClippedSubviews={this.props.removeClippedSubviews}
-        pageSize={1}
-        horizontal={this.props.horizontal}
-        pagingEnabled={this.props.pagingEnabled}
-        onViewableItemsChanged={this.onViewableItemsChangedBound}
-        renderItem={this.renderCalendarBound}
-        showsVerticalScrollIndicator={this.props.showScrollIndicator}
-        showsHorizontalScrollIndicator={this.props.showScrollIndicator}
-        scrollEnabled={this.props.scrollingEnabled}
-        keyExtractor={(item, index) => String(index)}
-        initialScrollIndex={this.state.openDate ? this.getMonthIndex(this.state.openDate) : false}
-        getItemLayout={this.getItemLayout}
-        scrollsToTop={this.props.scrollsToTop}
-      />
+      <View style={this.props.style}>
+        <FlatList
+          onLayout={this.onLayout}
+          ref={(c) => this.listView = c}
+          //scrollEventThrottle={1000}
+          style={[this.style.container,{flex:1}]}
+          initialListSize={this.pastScrollRange + this.futureScrollRange + 1}
+          data={this.state.rows}
+          //snapToAlignment='start'
+          //snapToInterval={this.calendarHeight}
+          removeClippedSubviews={this.props.removeClippedSubviews}
+          pageSize={1}
+          horizontal={this.props.horizontal}
+          pagingEnabled={this.props.pagingEnabled}
+          onViewableItemsChanged={this.onViewableItemsChangedBound}
+          renderItem={this.renderCalendarBound}
+          showsVerticalScrollIndicator={this.props.showScrollIndicator}
+          showsHorizontalScrollIndicator={this.props.showScrollIndicator}
+          scrollEnabled={this.props.scrollingEnabled}
+          keyExtractor={(item, index) => String(index)}
+          initialScrollIndex={this.state.openDate ? this.getMonthIndex(this.state.openDate) : false}
+          getItemLayout={this.getItemLayout}
+          scrollsToTop={this.props.scrollsToTop}
+        />
+      </View>
     );
   }
 }
