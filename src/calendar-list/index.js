@@ -182,8 +182,11 @@ class CalendarList extends Component {
     });
   }
 
+  /**
+   * 这里对calendarHeight属性进行了修改,竖滑模式时,calendarHeight为undefined,以实现高度自适应
+   */
   renderCalendar({item}) {
-    return (<CalendarListItem item={item} calendarHeight={this.props.calendarHeight} calendarWidth={this.props.horizontal ? this.props.calendarWidth : undefined  } {...this.props} />);
+    return (<CalendarListItem item={item} calendarHeight={this.props.horizontal ? this.props.calendarHeight : undefined} calendarWidth={this.props.horizontal ? this.props.calendarWidth : undefined  } {...this.props} />);
   }
 
   getItemLayout(data, index) {
