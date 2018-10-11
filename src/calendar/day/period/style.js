@@ -37,7 +37,6 @@ export default function styleConstructor(theme={}) {
       flex: 1
     },
     text: {
-
       //删除处
       //marginTop: 7,
       fontSize: appStyle.textDayFontSize,
