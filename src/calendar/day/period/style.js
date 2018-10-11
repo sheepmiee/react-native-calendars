@@ -55,7 +55,9 @@ export default function styleConstructor(theme={}) {
       borderRadius:13,
       justifyContent:'center',
       alignItems:'center',
-      backgroundColor: appStyle.textContainerBackgroundColor
+      
+      // 修改处，rn的bug，在安卓端不给颜色就没有borderRadius
+      backgroundColor: 'transparent'
     },
     today: {
       backgroundColor: appStyle.todayBackgroundColor
