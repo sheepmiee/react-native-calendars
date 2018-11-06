@@ -124,7 +124,7 @@ class Day extends Component {
   * 判断是今天时，添加dot
   * */
   renderDot() {
-    return this.props.state === 'today'?<View style={{height:6,width:6,borderRadius:3,backgroundColor:'#e8809a'}}/>:null;
+    return this.props.state === 'today'?<View style={{height:6,width:6,borderRadius:3,backgroundColor:'green'}}/>:null;
   }
 
   /*
