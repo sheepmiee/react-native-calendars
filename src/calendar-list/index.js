@@ -205,6 +205,7 @@ class CalendarList extends Component {
     return (
       <View style={[{flex:1},this.props.style]}>
         <FlatList
+          ListHeaderComponent={this.props.ListHeaderComponent}
           onLayout={this.onLayout}
           ref={(c) => this.listView = c}
           //scrollEventThrottle={1000}
