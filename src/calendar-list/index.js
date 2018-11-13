@@ -225,7 +225,7 @@ class CalendarList extends Component {
           scrollEnabled={this.props.scrollingEnabled}
           keyExtractor={(item, index) => String(index)}
           initialScrollIndex={this.state.openDate ? this.getMonthIndex(this.state.openDate) : false}
-          getItemLayout={this.getItemLayout}
+          //getItemLayout={this.getItemLayout}
           scrollsToTop={this.props.scrollsToTop}
         />
       </View>
