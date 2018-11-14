@@ -71,11 +71,16 @@ class CalendarList extends Component {
        * This selects range around current shown month [-0, +2] or [-1, +1] month for detail calendar rendering.
        * If `this.pastScrollRange` is `undefined` it's equal to `false` or 0 in next condition.
        */
-      if (this.props.pastScrollRange - 1 <= i && i <= this.props.pastScrollRange + 1 || !this.props.pastScrollRange && i <= this.props.pastScrollRange + 2) {
-        rows.push(rangeDate);
-      } else {
-        rows.push(rangeDateStr);
-      }
+      
+      //修改处 直接push Date值，不再做滑动加载处理，解决项目滑动跳动bug
+      rows.push(rangeDate);
+//       if (this.props.pastScrollRange - 1 <= i && i <= this.props.pastScrollRange + 1 || !this.props.pastScrollRange && i <= this.props.pastScrollRange + 2) {
+//         rows.push(rangeDate);
+//       } else {
+//         rows.push(rangeDateStr);
+//       }
+      
+      
     }
 
     this.state = {
@@ -218,14 +223,14 @@ class CalendarList extends Component {
           pageSize={1}
           horizontal={this.props.horizontal}
           pagingEnabled={this.props.pagingEnabled}
-          onViewableItemsChanged={this.onViewableItemsChangedBound}
+          //onViewableItemsChanged={this.onViewableItemsChangedBound} //  修改处
           renderItem={this.renderCalendarBound}
           showsVerticalScrollIndicator={this.props.showScrollIndicator}
           showsHorizontalScrollIndicator={this.props.showScrollIndicator}
           scrollEnabled={this.props.scrollingEnabled}
           keyExtractor={(item, index) => String(index)}
           initialScrollIndex={this.state.openDate ? this.getMonthIndex(this.state.openDate) : false}
-          //getItemLayout={this.getItemLayout}
+          getItemLayout={this.getItemLayout}
           scrollsToTop={this.props.scrollsToTop}
         />
       </View>
