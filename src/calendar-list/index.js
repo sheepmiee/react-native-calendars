@@ -72,13 +72,12 @@ class CalendarList extends Component {
        * If `this.pastScrollRange` is `undefined` it's equal to `false` or 0 in next condition.
        */
       
-      //修改处 直接push Date值，不再做滑动加载处理，解决项目滑动跳动bug
-      rows.push(rangeDate);
-//       if (this.props.pastScrollRange - 1 <= i && i <= this.props.pastScrollRange + 1 || !this.props.pastScrollRange && i <= this.props.pastScrollRange + 2) {
-//         rows.push(rangeDate);
-//       } else {
-//         rows.push(rangeDateStr);
-//       }
+      //修改处 修改直接渲染xDate范围
+      if (this.props.pastScrollRange - 1 <= i && i <= this.props.pastScrollRange + 4 || !this.props.pastScrollRange && i <= this.props.pastScrollRange + 5) {
+        rows.push(rangeDate);
+      } else {
+        rows.push(rangeDateStr);
+      }
       
       
     }
