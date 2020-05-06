@@ -71,7 +71,7 @@ class Day extends Component {
       defaultStyle.textStyle.color = this.theme.selectedDayTextColor;
 
       //这一天的状态为selected时，给文字一个圆形框
-      defaultStyle.textContainerStyle.backgroundColor = '#1296db';
+      defaultStyle.textContainerStyle.backgroundColor = '#2e7df6';
     }
     const resultStyle = ([marking]).reduce((prev, next) => {
       if (next.quickAction) {
@@ -123,15 +123,15 @@ class Day extends Component {
   /*
   * 判断是今天时，添加dot
   * */
-  renderDot() {
-    return this.props.state === 'today'?<View style={{height:6,width:6,borderRadius:3,backgroundColor:'green'}}/>:null;
-  }
+  // renderDot() {
+  //   return this.props.state === 'today'?<View style={{height:6,width:6,borderRadius:3,backgroundColor:'green'}}/>:null;
+  // }
 
   /*
   * 修改处
   * */
   render() {
-    const containerStyle = [this.style.base];
+    const containerStyle = [this.style.base,{width:40,height:40}];
     const textStyle = [this.style.text];
 
     //添加textContainerStyle
@@ -145,7 +145,10 @@ class Day extends Component {
       textStyle.push(this.style.disabledText);
     } else if (this.props.state === 'today') {
       containerStyle.push(this.style.today);
-      textStyle.push(this.style.todayText);
+
+      //今天文字加上颜色
+      textStyle.push({color:'#2e7df6'});
+      // textStyle.push(this.style.todayText);
     }
 
     //修改为20，即day盒子高度的一半
@@ -219,7 +222,7 @@ class Day extends Component {
     }
 
     //红色的小圆点
-    const dot = this.renderDot();
+    // const dot = this.renderDot();
 
     return (
       <TouchableWithoutFeedback
@@ -230,11 +233,16 @@ class Day extends Component {
           <View style={containerStyle}>
             {/*给文字一个圆形框，选中状态时给蓝色背景色*/}
             <View style={textContainerStyle}>
-              <Text allowFontScaling={false} style={textStyle}>{String(this.props.children)}</Text>
+              <Text allowFontScaling={false} style={textStyle}>
+                {
+                  this.props.state === 'today'
+                    ? <Text style={{fontSize:14,fontWeight:'bold'}}>今天</Text> :
+                    String(this.props.children)}
+              </Text>
             </View>
 
             {/*当天为今天时，文字下方给一个红色的小圆点标记*/}
-            <View style={{flex:1,justifyContent:'center'}}>{dot}</View>
+            {/*<View style={{flex:1,justifyContent:'center'}}>{dot}</View>*/}
           </View>
         </View>
       </TouchableWithoutFeedback>
