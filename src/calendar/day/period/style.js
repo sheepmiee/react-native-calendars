@@ -48,10 +48,9 @@ export default function styleConstructor(theme={}) {
 
     //添加处，添加textContainer
     textContainer: {
-      marginTop:4,
-      height:26,
-      width:26,
-      borderRadius:13,
+      height:40,
+      width:40,
+      borderRadius:20,
       justifyContent:'center',
       alignItems:'center',
       
