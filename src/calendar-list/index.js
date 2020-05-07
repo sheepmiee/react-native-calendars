@@ -215,6 +215,7 @@ class CalendarList extends Component {
           ref={(c) => this.listView = c}
           //scrollEventThrottle={1000}
           style={[this.style.container,{flex:1}]}
+          contentContainerStyle={[this.props.contentContainerStyle]}
           initialListSize={this.pastScrollRange + this.futureScrollRange + 1}
           data={this.state.rows}
           //snapToAlignment='start'
