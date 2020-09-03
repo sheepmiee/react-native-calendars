@@ -73,7 +73,7 @@ class CalendarList extends Component {
        */
       
       //修改处 修改直接渲染xDate范围
-      if (this.props.pastScrollRange - 1 <= i && i <= this.props.pastScrollRange + 4 || !this.props.pastScrollRange && i <= this.props.pastScrollRange + 5) {
+      if (this.props.pastScrollRange - 1 <= i && i <= this.props.pastScrollRange + 12 || !this.props.pastScrollRange && i <= this.props.pastScrollRange + 13) {
         rows.push(rangeDate);
       } else {
         rows.push(rangeDateStr);
@@ -187,10 +187,10 @@ class CalendarList extends Component {
   }
 
   /**
-   * 这里对calendarHeight属性进行了修改,竖滑模式时,calendarHeight为undefined,以实现高度自适应,以实现高度自适应,注意this.props的扩展写在前面
+   * 这里对calendarHeight属性进行了修改,竖滑模式时,calendarHeight为undefined,以实现高度自适应,注意this.props的扩展写在前面
    * 2020.5.6 添加isFirstMonth prop
    */
-  renderCalendar({item}) {
+  renderCalendar({item,index}) {
     return (<CalendarListItem {...this.props} isFirstMonth={index===0} item={item} calendarHeight={this.props.horizontal ? this.props.calendarHeight : undefined} calendarWidth={this.props.horizontal ? this.props.calendarWidth : undefined  } />);
   }
 
